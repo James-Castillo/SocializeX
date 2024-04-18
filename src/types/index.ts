@@ -18,7 +18,7 @@ export type UserCardProps = {
 };
 
 export type GridPostListProps = {
-  posts: any;
+  posts: Models.Document[];
   showUser?: boolean;
   showStats?: boolean;
 };
