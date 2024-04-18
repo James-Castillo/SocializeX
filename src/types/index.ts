@@ -53,8 +53,9 @@ export type IContextType = {
   isLoading: boolean;
   setUser: React.Dispatch<React.SetStateAction<IUser>>;
   isAuthenticated: boolean;
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>,
-  checkAuthUser: () => Promise<boolean>
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  checkAuthUser: () => Promise<boolean>;
+  signOut: () => Promise<void>; // Agregar la función signOut a la interfaz
 };
 
 export type INavLink = {

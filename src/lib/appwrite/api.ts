@@ -30,6 +30,7 @@ export async function createUserAccount(user: INewUser) {
   }
 }
 
+
 export async function saveUserToDB(user: {
   accountId: string;
   email: string;
@@ -74,7 +75,7 @@ export async function getAccount() {
 export async function getCurrentUser() {
   try {
     const currentAccount = await getAccount();
-
+    console.log(currentAccount)
     if (!currentAccount) throw Error;
 
     const currentUser = await databases.listDocuments(
@@ -95,7 +96,7 @@ export async function getCurrentUser() {
 export async function signOutAccount() {
   try {
     const session = await account.deleteSession("current");
-  
+
     return session;
   } catch (error) {
     console.log(error);
