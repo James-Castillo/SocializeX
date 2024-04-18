@@ -68,14 +68,13 @@ export async function getAccount() {
 
     return currentAccount;
   } catch (error) {
-    console.log(error);
+    console.log();
   }
 }
 
 export async function getCurrentUser() {
   try {
     const currentAccount = await getAccount();
-    console.log(currentAccount)
     if (!currentAccount) throw Error;
 
     const currentUser = await databases.listDocuments(
@@ -88,7 +87,7 @@ export async function getCurrentUser() {
 
     return currentUser.documents[0];
   } catch (error) {
-    console.log(error);
+    console.log();
     return null;
   }
 }
