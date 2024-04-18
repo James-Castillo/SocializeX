@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Models } from "appwrite";
 
 export type ProfileUploaderProps = {
@@ -16,14 +18,14 @@ export type UserCardProps = {
 };
 
 export type GridPostListProps = {
-  posts: Models.Document[];
+  posts: any;
   showUser?: boolean;
   showStats?: boolean;
 };
 
 export type SearchResultProps = {
   isSearchFetching: boolean;
-  searchedPosts?: Models.Document[];
+  searchedPosts: any;
 };
 
 export type PostStatsProps = {
