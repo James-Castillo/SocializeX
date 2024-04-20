@@ -30,7 +30,6 @@ export async function createUserAccount(user: INewUser) {
   }
 }
 
-
 export async function saveUserToDB(user: {
   accountId: string;
   email: string;
@@ -56,6 +55,7 @@ export async function signInAccount(user: { email: string; password: string }) {
   try {
     const session = await account.createEmailSession(user.email, user.password);
 
+    localStorage.setItem("sessionId", session.userId);
     return session;
   } catch (error) {
     console.log(error);
@@ -74,28 +74,29 @@ export async function getAccount() {
 
 export async function getCurrentUser() {
   try {
-    const currentAccount = await getAccount();
-    if (!currentAccount) throw Error;
+    const currentAccountId = localStorage.getItem("sessionId");
 
-    const currentUser = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.userCollectionId,
-      [Query.equal("accountId", currentAccount.$id)]
-    );
+    if (currentAccountId !== null) {
+      const currentUser = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.userCollectionId,
 
-    if (!currentUser) throw Error;
+        [Query.equal("accountId", currentAccountId)]
+      );
 
-    return currentUser.documents[0];
+      if (!currentUser) throw Error;
+
+      return currentUser.documents[0];
+    }
   } catch (error) {
-    console.log();
-    return null;
+    console.log(error);
   }
 }
 
 export async function signOutAccount() {
   try {
+    localStorage.clear();
     const session = await account.deleteSession("current");
-
     return session;
   } catch (error) {
     console.log(error);
@@ -348,8 +349,12 @@ export async function deletePost(postId?: string, imageId?: string) {
   }
 }
 
-export async function getInfinitePosts({ pageParam }: { pageParam: number | null }) {
-  const cursor = pageParam ? pageParam.toString() : null; 
+export async function getInfinitePosts({
+  pageParam,
+}: {
+  pageParam: number | null;
+}) {
+  const cursor = pageParam ? pageParam.toString() : null;
 
   const queries: string[] = [Query.orderDesc("$updatedAt"), Query.limit(9)];
 
