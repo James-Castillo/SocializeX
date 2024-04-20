@@ -66,13 +66,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const handleLogout = () => {
-    // Aquí limpias la información del usuario y estableces isAuthenticated en false
-    setUser(INITIAL_USER);
-    setIsAuthenticated(false);
-    // Rediriges a la página de inicio de sesión u otra página relevante después del cierre de sesión
-    navigate("/sign-in");
-  };
 
   useEffect(() => {
     const cookieFallback = localStorage.getItem("cookieFallback");
@@ -95,7 +88,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isAuthenticated,
     setIsAuthenticated,
     checkAuthUser,
-    handleLogout
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
