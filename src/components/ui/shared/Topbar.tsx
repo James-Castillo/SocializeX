@@ -10,7 +10,7 @@ const Topbar = () => {
   const { user } = useUserContext();
 
   useEffect(() => {
-    if (isSuccess) navigate("/sign-in");
+    if (isSuccess) navigate(0);
   }, [isSuccess]);
 
   return (
